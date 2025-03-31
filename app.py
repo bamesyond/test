@@ -13,85 +13,86 @@ if st.button('Orusbucucu'):
 age = st.text_input('Enter your age')
 
 # Add some styling and animations
+# Add a colorful sidebar
+st.sidebar.title("Fun Interactive Elements! 🎨")
+st.sidebar.markdown("---")
+
+# 1. Color picker
+favorite_color = st.sidebar.color_picker('Pick your favorite color', '#00f900')
+st.markdown(f'<div style="background-color: {favorite_color}; padding: 10px; border-radius: 10px;">Your chosen color!</div>', unsafe_allow_html=True)
+
+# 2. Slider for happiness level
+happiness = st.slider('How happy are you today? 😊', 0, 100, 50)
+st.write(f'Happiness level: {happiness}%')
+
+# 3. Select box for favorite animal
+animal = st.selectbox(
+    'What\'s your favorite animal? 🐾',
+    ('🐶 Dog', '🐱 Cat', '🐨 Koala', '🦊 Fox', '🐼 Panda', '🦁 Lion')
+)
+st.write(f'You selected: {animal}')
+
+# 4. Radio buttons for preferred weather
+weather = st.radio(
+    "What's your ideal weather? ⛅",
+    ('Sunny ☀️', 'Rainy 🌧️', 'Snowy ❄️', 'Cloudy ☁️')
+)
+
+# 5. Multi-select for hobbies
+hobbies = st.multiselect(
+    'Select your hobbies 🎨',
+    ['Reading 📚', 'Gaming 🎮', 'Cooking 🍳', 'Sports 🏃‍♂️', 'Music 🎵', 'Art 🎨', 'Travel ✈️']
+)
+
+# 6. Number input for lucky number
+lucky_number = st.number_input('What\'s your lucky number? 🎲', min_value=1, max_value=100)
+
+# 7. Date input
+special_date = st.date_input('Pick a special date 📅')
+
+# 8. Time input
+favorite_time = st.time_input('What\'s your favorite time of day? ⏰')
+
+# 9. Text area for life motto
+life_motto = st.text_area('Share your life motto! 💭')
+
+# 10. File uploader
+uploaded_file = st.file_uploader("Upload a fun picture! 📸", type=['jpg', 'png', 'gif'])
+if uploaded_file is not None:
+    st.image(uploaded_file, caption='Your uploaded image')
+
+# 11. Progress bar animation
+import time
+progress_bar = st.progress(0)
+for i in range(100):
+    time.sleep(0.01)
+    progress_bar.progress(i + 1)
+
+# 12. Balloons animation when clicking a button
+if st.button('Click for a surprise! 🎉'):
+    st.balloons()
+
+# Add some custom CSS styling
 st.markdown("""
-<style>
-.stApp {
-    background: linear-gradient(to right, #f8f9fa, #e9ecef);
-}
-.big-font {
-    font-size:30px !important;
-    color: #1f77b4;
-}
-</style>
-""", unsafe_allow_html=True)
-
-# Create columns for better layout
-col1, col2 = st.columns(2)
-
-with col1:
-    st.markdown('<p class="big-font">Personal Information</p>', unsafe_allow_html=True)
-    
-    # Add emoji to name input
-    name = st.text_input('👤 Enter your name', value=name if 'name' in locals() else '')
-    
-    # Add age validation
-    try:
-        age = int(st.text_input('🎂 Enter your age', value=age if 'age' in locals() else ''))
-        if age < 0 or age > 150:
-            st.warning('Please enter a valid age between 0 and 150')
-    except ValueError:
-        if age:  # Only show warning if something was entered
-            st.warning('Please enter a valid number for age')
-        age = None
-
-with col2:
-    st.markdown('<p class="big-font">Fun Cooking Animation!</p>', unsafe_allow_html=True)
-    
-    # Cooking animation using ASCII art and streamlit
-    cooking_stages = [
-        "🥘 Preparing...",
-        "🔥 Heating up...",
-        "♨️ Cooking...",
-        "👨‍🍳 Almost done...",
-        "✨ Bon appétit!"
-    ]
-    
-    if st.button('Start Cooking!'):
-        with st.spinner('Cooking in progress...'):
-            for stage in cooking_stages:
-                st.write(stage)
-                st.balloons()
-                st.sleep(1)
-            st.success('Your virtual meal is ready! 🎉')
-
-# Add a fun fact section
-st.markdown("---")
-if age:
-    fun_facts = {
-        "child": "Did you know? Children have more taste buds than adults!",
-        "teen": "Fun fact: Teenagers need more sleep than adults!",
-        "adult": "Interesting fact: The human body contains enough carbon to make around 900 pencils!",
-        "senior": "Amazing fact: The oldest person ever lived to be 122 years old!"
+    <style>
+    .stButton>button {
+        background-color: #4CAF50;
+        color: white;
+        border-radius: 20px;
     }
-    
-    if age < 13:
-        st.info(fun_facts["child"])
-    elif age < 20:
-        st.info(fun_facts["teen"])
-    elif age < 60:
-        st.info(fun_facts["adult"])
-    else:
-        st.info(fun_facts["senior"])
+    .stTextInput>div>div>input {
+        border-radius: 10px;
+    }
+    </style>
+    """, unsafe_allow_html=True)
 
-# Add a playful greeting button with animation
-if st.button('🎈 Greet Me!', key='greet'):
-    if name:
-        st.markdown(f"<h1 style='text-align: center; color: #1f77b4; animation: bounce 1s infinite;'>Hello {name}! 🌟</h1>", unsafe_allow_html=True)
-        st.snow()
-    else:
-        st.warning("Please enter your name first! 😊")
-
-# Add footer
-st.markdown("---")
-st.markdown("Made with ❤️ using Streamlit")
-
+# Display a summary of selections
+st.markdown("### Your Profile Summary 📋")
+st.write(f"Name: {name}")
+st.write(f"Age: {age}")
+st.write(f"Favorite Color: {favorite_color}")
+st.write(f"Favorite Animal: {animal}")
+st.write(f"Weather Preference: {weather}")
+st.write(f"Lucky Number: {lucky_number}")
+st.write(f"Special Date: {special_date}")
+st.write(f"Hobbies: {', '.join(hobbies) if hobbies else 'None selected'}")
